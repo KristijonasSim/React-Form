@@ -1,12 +1,8 @@
 import React from 'react'
 import { Box } from '@mui/system'
-import { Typography } from '@mui/material'
-import { TextField } from '@mui/material';
+import { Typography, TextField, Link, Button, MenuItem  } from '@mui/material'
 import styled from '@emotion/styled';
-import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
-import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
 
 const StyledInputBox =styled(Box)`
   display: flex;
@@ -39,7 +35,10 @@ const RegisterForm = () => {
   return (
    <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', }}>
       <Box sx={{ width: '40%', height: '70%', border: '2px solid black', borderRadius: '10px', display:'flex', justifyContent:'flex-start', alignItems:'center', flexDirection:'column' }}>
-        <Link to="/">Cancel</Link>
+        <Button sx={{position: 'absolute', right: '32%', marginTop:'10px'}}>
+          <Link href="/" sx={{textDecoration: 'none'}} >Cancel</Link>
+        </Button>
+        
         <Typography variant='h3' sx={{marginTop: '40px'}}>Register new Account</Typography>
         <StyledInputBox>
            <TextField sx={{marginTop:'20px'}}
@@ -64,7 +63,7 @@ const RegisterForm = () => {
             <TextField sx={{marginTop:'20px'}}
               id="filled-select-currency"
               select
-              label="Please select your sex"
+              label="Select your sex"
               value={sex}
               onChange={e => setSex(e.target.value)}
               variant="standard"

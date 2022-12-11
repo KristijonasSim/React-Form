@@ -15,8 +15,8 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route index element={<App />} />
-      <Route path="MainPaige" element={<MainPage/>}/>
-      <Route path="Register" element={<RegisterForm />}/>
+      <Route path="home" element={<MainPage/>}/>
+      <Route path="register" element={<RegisterForm />}/>
     </Routes>
   </BrowserRouter>
 );
