@@ -3,13 +3,25 @@ import Typography from '@mui/material/Typography';
 import { TextField } from '@mui/material';
 import LoginButton from '../../Components/login_button/login_ button';
 import { Link } from 'react-router-dom'
+import styled from '@emotion/styled';
+
+const StyledInputBox =styled(Box)`
+
+  display:flex;
+  width:50%;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  margin-top:20px;
+
+`;
 
 function MainPage () {
 return (
     <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', }}>
       <Box sx={{ width: '40%', height: '55%', border: '2px solid black', borderRadius: '10px', display:'flex', justifyContent:'flex-start', alignItems:'center', flexDirection:'column' }}>
          <Typography variant='h3' align='center' sx={{marginTop: '40px'}}>Welcome back !</Typography>
-         <Box sx={{width:'50%', display:'flex',flexDirection:'column', justifyContent:'center', alignItems:'center', marginTop:'20px'}}>
+         <StyledInputBox>
             <TextField
               fullWidth
               required
@@ -17,7 +29,7 @@ return (
               label="Email"
               variant="standard"
             />
-            <TextField
+            <TextField sx={{mt: 4}}
               fullWidth
               required
               id="standard-password-input"
@@ -25,7 +37,7 @@ return (
               type="password"
               variant="standard"
             />
-        </Box>
+        </StyledInputBox>
         <LoginButton />
         <Box sx={{marginTop:'40px'}}>
           <Typography variant='h6'> Don't have an account? <Link to="Register">Register</Link></Typography>
