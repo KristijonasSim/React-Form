@@ -2,10 +2,9 @@ import React from 'react'
 import { Box } from '@mui/system'
 import { Typography, TextField, Link, Button, MenuItem  } from '@mui/material'
 import styled from '@emotion/styled';
-import { useState } from 'react';
 import {  useFormik } from 'formik';
 import * as Yup from 'yup';
-
+import { useState } from 'react';
 
 const StyledInputBox =styled(Box)`
   display: flex;
@@ -19,7 +18,7 @@ const StyledRegisterButton =styled(Button)`
   font-size: 18px;
 `
 
-const sexOptions = [
+const genderOptions = [
   {
     value: 'Male',
   },
@@ -34,12 +33,14 @@ const sexOptions = [
 
 const RegisterForm = () => {
 
+  const [ person, setPperson] = useState([])
+
   const formik = useFormik({
     initialValues: {
-      name:'',
-      surname:'',
+      firstName:'',
+      lastName:'',
       age:'',
-      sex:'',
+      gender:'',
       email:'',
       password:'',
       passwordRepeat:''
@@ -47,16 +48,16 @@ const RegisterForm = () => {
     validateOnBlur: false,
     validateOnChange: false,
     validationSchema: Yup.object({
-        name:Yup.string()
+        firstName:Yup.string()
           .max(20, 'Must be 20 characters or less')
           .required('Required'),
-        surname:Yup.string()
+        lastName:Yup.string()
           .max(20, 'Must be 20 characters or less')
           .required('Required'),
         age:Yup.number()
           .min(18, 'You must be at least 18 years old')
           .required('Required'),
-        sex:Yup.string()
+        gender:Yup.string()
           .required('Required'),
         email:Yup.string()
           .email('Invalid email adress')
@@ -68,11 +69,12 @@ const RegisterForm = () => {
     }),
 
     onSubmit: values => {
-      alert(JSON.stringify( values, null, 2 ));
+
+      (JSON.stringify( values, null, 2 ));
+      setPperson(values)
     },
   })
 
-  console.log(formik)
 
   return (
    <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', }}>
@@ -84,28 +86,28 @@ const RegisterForm = () => {
         <Typography variant='h3' sx={{marginTop: '40px'}}>Register new Account</Typography>
          <StyledInputBox component="form" onSubmit={formik.handleSubmit}>
            <TextField sx={{marginTop:'20px'}}
-              id="name"
-              error={!!formik.errors?.name && formik.touched.name}
-              name="name"
-              label="Name"
+              id="firstName"
+              error={!!formik.errors?.name && formik.touched.firstName}
+              name="firstName"
+              label="First name"
               type='text'
               variant="standard"
-              helperText={formik.errors?.name}
+              helperText={formik.errors?.firstName}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.name}
+              value={formik.values.firstName}
             />
               <TextField sx={{marginTop:'20px'}}
-              id="surname"
-              error = {!!formik.errors?.surname}
-              name="surname"
-              label="Surname"
+              id="lastName"
+              error = {!!formik.errors?.lastName}
+              name="lastName"
+              label="Last name"
               type='text'
               variant="standard"
-              helperText={formik.errors?.surname}
+              helperText={formik.errors?.lastName}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.surname}
+              value={formik.values.lastName}
             />
               <TextField sx={{marginTop:'20px'}}
               type='number'
@@ -120,18 +122,18 @@ const RegisterForm = () => {
               value={formik.values.age}
             />
             <TextField sx={{marginTop:'20px'}}
-              id="sex"
-              name='sex'
-              error = {!!formik.errors?.sex}
+              id="gender"
+              name='gender'
+              error = {!!formik.errors?.gender}
               select
-              label="Select your sex"
+              label="Select your gender"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               variant="standard"
-              helperText={formik.errors?.sex}
-              value={formik.values.sex}
+              helperText={formik.errors?.gender}
+              value={formik.values.gender}
             >
-          {sexOptions.map((option) => (
+          {genderOptions.map((option) => (
             <MenuItem key={option.value} value={option.value}>
               {option.value}
             </MenuItem>
