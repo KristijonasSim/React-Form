@@ -3,7 +3,7 @@ import { TextField, Link, Typography } from '@mui/material';
 import LoginButton from '../../Components/login_button/login_ button';
 import styled from '@emotion/styled';
 import {  useFormik } from 'formik';
- import * as Yup from 'yup';
+import * as Yup from 'yup';
 
 
 const StyledInputBox =styled(Box)`
