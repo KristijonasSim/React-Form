@@ -4,7 +4,17 @@ import LoginButton from '../../Components/login_button/login_ button';
 import styled from '@emotion/styled';
 import {  useFormik } from 'formik';
 import * as Yup from 'yup';
+import { userApi } from '../../Components/Api/userApi';
 
+const LoginFormBox = styled(Box)`
+  width: 40%;
+  height: 55%;
+  border: 2px solid black;
+  border-radius: 10px ;
+  display:flex;
+  align-items:center;
+  flex-direction:column;
+`
 
 const StyledInputBox =styled(Box)`
   display:flex;
@@ -15,45 +25,53 @@ const StyledInputBox =styled(Box)`
   margin-top:20px;
 `;
 
-function MainPage () {
+const validationSchema = Yup.object({
+        username: Yup.string()
+          .required('Required'),
+        password: Yup.string()
+          .required('Required')
+     })
+
+const  MainPage = () => {
+
    const formik = useFormik({
      initialValues: {
-       email: '',
+       username: '',
        password: ''
      },
      validateOnBlur: false,
      validateOnChange: false,
-     validationSchema: Yup.object({
-        email: Yup.string()
-          .email('Invalid email adress')
-          .required('Required'),
-        password: Yup.string()
-          .required('Required'),
-
-     }),
-        onSubmit: values => {
-       alert(JSON.stringify(values, null, 2));
+     validationSchema,
+        onSubmit:  values => {
+          userApi.userLogin({username:values.username, password:values.password}).then(data => data)
+          alert(JSON.stringify(values, null, 2));
      },
     })
-console.log(formik)
-
 
 return (
     <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', }}>
-      <Box sx={{ width: '40%', height: '55%', border: '2px solid black', borderRadius: '10px', display:'flex', justifyContent:'flex-start', alignItems:'center', flexDirection:'column' }}>
+      <Box sx={{marginRight:'20px'}}>
+        <Typography>
+              Username: kminchelle 
+        </Typography>
+              <Typography>
+              password: 0lelplR
+        </Typography>
+      </Box>
+      <LoginFormBox >
          <Typography variant='h3' align='center' sx={{marginTop: '40px'}}>Welcome back !</Typography>
          <StyledInputBox component="form" onSubmit={formik.handleSubmit}>
             <TextField
               fullWidth
-              error = {!!formik.errors?.email}
-              id="email"
-              name="email"
-              label="Email"
-              type='email'
+              error = {!!formik.errors?.username}
+              id="username"
+              name="username"
+              label="Username"
+              type='text'
               variant="standard"
-              helperText={formik.errors?.email}
+              helperText={formik.errors?.username}
               onChange={formik.handleChange}
-              value={formik.values.email}
+              value={formik.values.username}
             />
             <TextField sx={{mt: 4}}
               fullWidth
@@ -72,7 +90,7 @@ return (
         <Box sx={{marginTop:'40px'}}>
           <Typography variant='h6'> Don't have an account? <Link sx={{ textDecoration: 'none'}} href="register">Register</Link></Typography>
         </Box>
-      </Box>
+      </LoginFormBox>
     </Box>
   );
 }
