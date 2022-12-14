@@ -3,9 +3,18 @@ import { TextField, Link, Typography } from '@mui/material';
 import LoginButton from '../../Components/login_button/login_ button';
 import styled from '@emotion/styled';
 import {  useFormik } from 'formik';
-import { useState } from 'react';
 import * as Yup from 'yup';
 import { userApi } from '../../Components/Api/userApi';
+
+const LoginFormBox = styled(Box)`
+  width: 40%;
+  height: 55%;
+  border: 2px solid black;
+  border-radius: 10px ;
+  display:flex;
+  align-items:center;
+  flex-direction:column;
+`
 
 const StyledInputBox =styled(Box)`
   display:flex;
@@ -16,8 +25,14 @@ const StyledInputBox =styled(Box)`
   margin-top:20px;
 `;
 
-function MainPage () {
+const validationSchema = Yup.object({
+        username: Yup.string()
+          .required('Required'),
+        password: Yup.string()
+          .required('Required')
+     })
 
+const  MainPage = () => {
 
    const formik = useFormik({
      initialValues: {
@@ -26,24 +41,24 @@ function MainPage () {
      },
      validateOnBlur: false,
      validateOnChange: false,
-     validationSchema: Yup.object({
-        username: Yup.string()
-          .required('Required'),
-        password: Yup.string()
-          .required('Required')
-
-     }),
-        onSubmit:  ({username, password, ...values}) => {
-          userApi.userLogin({username:username, password:password}).then(data => data)
+     validationSchema,
+        onSubmit:  values => {
+          userApi.userLogin({username:values.username, password:values.password}).then(data => data)
           alert(JSON.stringify(values, null, 2));
      },
     })
-console.log(formik)
-
 
 return (
     <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', }}>
-      <Box sx={{ width: '40%', height: '55%', border: '2px solid black', borderRadius: '10px', display:'flex', justifyContent:'flex-start', alignItems:'center', flexDirection:'column' }}>
+      <Box sx={{marginRight:'20px'}}>
+        <Typography>
+              Username: kminchelle 
+        </Typography>
+              <Typography>
+              password: 0lelplR
+        </Typography>
+      </Box>
+      <LoginFormBox >
          <Typography variant='h3' align='center' sx={{marginTop: '40px'}}>Welcome back !</Typography>
          <StyledInputBox component="form" onSubmit={formik.handleSubmit}>
             <TextField
@@ -75,7 +90,7 @@ return (
         <Box sx={{marginTop:'40px'}}>
           <Typography variant='h6'> Don't have an account? <Link sx={{ textDecoration: 'none'}} href="register">Register</Link></Typography>
         </Box>
-      </Box>
+      </LoginFormBox>
     </Box>
   );
 }
