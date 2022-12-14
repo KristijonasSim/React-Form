@@ -80,6 +80,7 @@ const RegisterForm = () => {
     onSubmit: values => {
       (JSON.stringify( values, null, 2 ));
       setPperson(values)
+      console.log(formik)
     },
   })
 
@@ -139,9 +140,9 @@ const RegisterForm = () => {
               helperText={formik.errors?.gender}
               value={formik.values.gender}
             >
-          {genderOptions.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.value}
+          {genderOptions.map(({value}) => (
+            <MenuItem key={value} value={value}>
+              {value}
             </MenuItem>
           ))}
         </TextField>
